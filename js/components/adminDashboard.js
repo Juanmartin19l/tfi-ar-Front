@@ -1,9 +1,10 @@
 import { fetchEmployees } from "../api/employee.js";
-import { renderEditEmployeeForm } from "./editEmployee.js";
+import { renderEditEmployeeForm } from "./editEmployeeForm.js";
+import { deleteEmployee } from "../api/employee.js"; // Importar la función de eliminación
 
 export async function renderAdminDashboard() {
     const app = document.getElementById("app");
-    const employees = await fetchEmployees(); // Llamada a la API
+    const employees = await fetchEmployees();
 
     app.innerHTML = `
         <div class="w-full max-w-4xl mx-auto">
@@ -31,8 +32,11 @@ export async function renderAdminDashboard() {
                                     <td class="border px-4 py-2">${employee.email}</td>
                                     <td class="border px-4 py-2">${employee.dni}</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded edit-button" data-id="${employee.id}">
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${employee.id}" id="edit-${employee.id}">
                                             Edit
+                                        </button>
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${employee.id}" id="delete-${employee.id}">
+                                            Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -42,27 +46,29 @@ export async function renderAdminDashboard() {
                         </tbody>
                     </table>
                 </div>
-
-                <button id="logoutButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
-                    Logout
-                </button>
             </div>
         </div>
     `;
 
-    // Agregar eventos a los botones de edición
-    const editButtons = document.querySelectorAll(".edit-button");
-    editButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const employeeId = button.getAttribute("data-id");
-            renderEditEmployeeForm(employeeId); // Cargar el formulario de edición
-        });
-    });
+    // Asignar eventos al botón de edición
+    employees.forEach((employee) => {
+        document
+            .getElementById(`edit-${employee.id}`)
+            .addEventListener("click", () => {
+                renderEditEmployeeForm(employee);
+            });
 
-    // Logout functionality
-    const logoutButton = document.getElementById("logoutButton");
-    logoutButton.addEventListener("click", () => {
-        sessionStorage.removeItem("jwt");
-        window.location.reload();
+        // Asignar evento al botón de eliminación
+        document
+            .getElementById(`delete-${employee.id}`)
+            .addEventListener("click", async () => {
+                const confirmDelete = confirm(
+                    `Are you sure you want to delete ${employee.name}?`
+                );
+                if (confirmDelete) {
+                    await deleteEmployee(employee.id);
+                    renderAdminDashboard(); // Recargar la lista de empleados
+                }
+            });
     });
 }
