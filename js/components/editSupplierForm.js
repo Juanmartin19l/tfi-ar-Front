@@ -118,6 +118,7 @@ export function renderEditSupplierForm(supplier) {
                                 <textarea class="observation shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">${
                                     condition.observation || ""
                                 }</textarea>
+                                <div class="mt-4 border-t-4 border-gray-300"></div>
                             </div>
                         </div>
                     `
@@ -172,6 +173,7 @@ export function renderEditSupplierForm(supplier) {
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Observation</label>
                     <textarea class="observation shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    <div class="mt-4 border-t-4 border-gray-300"></div>
                 </div>
             </div>
         `;

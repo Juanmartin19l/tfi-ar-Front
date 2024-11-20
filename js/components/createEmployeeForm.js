@@ -28,6 +28,7 @@ export function renderCreateEmployeeForm() {
                     <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone</label>
                     <input type="tel" id="phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
+                <h3 class="text-xl font-semibold mb-4">Address</h3>
                 <div class="mb-4">
                     <label for="street" class="block text-gray-700 text-sm font-bold mb-2">Street</label>
                     <input type="text" id="street" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -59,10 +60,6 @@ export function renderCreateEmployeeForm() {
                 <div class="mb-4">
                     <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
                     <input type="date" id="startDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="mb-4">
-                    <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
-                    <input type="date" id="endDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="flex items-center justify-between">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
@@ -98,7 +95,7 @@ export function renderCreateEmployeeForm() {
                     observations: document.getElementById("observations").value,
                 },
                 startDate: document.getElementById("startDate").value,
-                endDate: document.getElementById("endDate").value || null,
+                endDate: null,
             };
 
             try {

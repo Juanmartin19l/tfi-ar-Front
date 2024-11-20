@@ -2,7 +2,7 @@ import { fetchEmployees } from "../api/employee.js";
 import { renderEditEmployeeForm } from "./editEmployeeForm.js";
 import { deleteEmployee } from "../api/employee.js";
 import { renderCreateEmployeeForm } from "./createEmployeeForm.js";
-import { renderNavbar } from "./navbar.js"; // Importamos el navbar
+import { renderNavbar } from "./navbar.js";
 
 export async function renderAdminDashboard() {
     const app = document.getElementById("app");
