@@ -1,18 +1,29 @@
 import { fetchEmployees } from "../api/employee.js";
 import { renderEditEmployeeForm } from "./editEmployeeForm.js";
-import { deleteEmployee } from "../api/employee.js"; // Importar la función de eliminación
+import { deleteEmployee } from "../api/employee.js";
+import { renderCreateEmployeeForm } from "./createEmployeeForm.js";
+import { renderNavbar } from "./navbar.js"; // Importamos el navbar
 
 export async function renderAdminDashboard() {
     const app = document.getElementById("app");
+
+    // Agregar el navbar
+    app.innerHTML = renderNavbar();
+
+    // Obtener empleados
     const employees = await fetchEmployees();
 
-    app.innerHTML = `
-        <div class="w-full max-w-4xl mx-auto">
+    // Agregar contenido del Dashboard después del navbar
+    app.innerHTML += `
+        <div class="w-full max-w-4xl mx-auto mt-8">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Admin Dashboard</h2>
                 <p class="mb-4">Manage employees, sales, suppliers, and more.</p>
                 
                 <h3 class="text-xl font-semibold mb-4">Employee List</h3>
+                <button id="addEmployeeButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    Add Employee
+                </button>
                 <div class="overflow-x-auto">
                     <table class="table-auto w-full bg-gray-100 rounded-lg shadow-md">
                         <thead>
@@ -50,7 +61,7 @@ export async function renderAdminDashboard() {
         </div>
     `;
 
-    // Asignar eventos al botón de edición
+    // Asignar eventos a los botones de edición y eliminación
     employees.forEach((employee) => {
         document
             .getElementById(`edit-${employee.id}`)
@@ -58,7 +69,6 @@ export async function renderAdminDashboard() {
                 renderEditEmployeeForm(employee);
             });
 
-        // Asignar evento al botón de eliminación
         document
             .getElementById(`delete-${employee.id}`)
             .addEventListener("click", async () => {
@@ -71,4 +81,9 @@ export async function renderAdminDashboard() {
                 }
             });
     });
+
+    // Evento para abrir el formulario de creación
+    document
+        .getElementById("addEmployeeButton")
+        .addEventListener("click", renderCreateEmployeeForm);
 }

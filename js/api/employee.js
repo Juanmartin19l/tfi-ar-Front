@@ -106,3 +106,27 @@ export async function deleteEmployee(id) {
         alert(`Failed to delete employee: ${error.message}`);
     }
 }
+// Crear un nuevo empleado
+export async function createEmployee(employeeData) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(`${API_BASE_URL}/employees`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            body: JSON.stringify(employeeData),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to create employee");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error creating employee:", error);
+        throw error;
+    }
+}
