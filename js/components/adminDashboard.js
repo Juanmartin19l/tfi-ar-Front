@@ -3,11 +3,12 @@ import { renderEditEmployeeForm } from "./editEmployeeForm.js";
 import { deleteEmployee } from "../api/employee.js";
 import { renderCreateEmployeeForm } from "./createEmployeeForm.js";
 import { renderNavbar } from "./navbar.js";
+import { renderEmployeeDetails } from "./employeeDetails.js"; // Importar el nuevo componente de detalles
 
 export async function renderAdminDashboard() {
     const app = document.getElementById("app");
 
-    // Agregar el navbar
+    // Renderizar el navbar
     app.innerHTML = renderNavbar();
 
     // Obtener empleados
@@ -46,6 +47,9 @@ export async function renderAdminDashboard() {
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${employee.id}" id="edit-${employee.id}">
                                             Edit
                                         </button>
+                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${employee.id}" id="details-${employee.id}">
+                                            Details
+                                        </button>
                                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${employee.id}" id="delete-${employee.id}">
                                             Delete
                                         </button>
@@ -61,12 +65,18 @@ export async function renderAdminDashboard() {
         </div>
     `;
 
-    // Asignar eventos a los botones de edición y eliminación
+    // Asignar eventos a los botones
     employees.forEach((employee) => {
         document
             .getElementById(`edit-${employee.id}`)
             .addEventListener("click", () => {
                 renderEditEmployeeForm(employee);
+            });
+
+        document
+            .getElementById(`details-${employee.id}`)
+            .addEventListener("click", async () => {
+                renderEmployeeDetails(employee.id); // Mostrar detalles del empleado
             });
 
         document
