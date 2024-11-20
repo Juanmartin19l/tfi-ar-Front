@@ -1,11 +1,7 @@
-import {
-    fetchSuppliers,
-    createSupplier,
-    deleteSupplier,
-} from "../api/suppliers.js"; // Importar funciones necesarias
-//import { renderCreateSupplierForm } from "./createSupplierForm.js";
-//import { renderEditSupplierForm } from "./editSupplierForm.js";
-import { renderNavbar } from "./navbar.js"; // Importar el navbar
+import { fetchSuppliers, deleteSupplier } from "../api/suppliers.js";
+import { renderCreateSupplierForm } from "./createSupplierForm.js";
+import { renderEditSupplierForm } from "./editSupplierForm.js";
+import { renderNavbar } from "./navbar.js";
 
 export async function renderSuppliersDashboard() {
     const app = document.getElementById("app");
@@ -16,7 +12,7 @@ export async function renderSuppliersDashboard() {
     // Obtener la lista de proveedores
     const suppliers = await fetchSuppliers();
 
-    // Renderizar el contenido principal del dashboard
+    // Renderizar el contenido principal
     app.innerHTML += `
         <div class="mt-16 w-full max-w-4xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
@@ -66,11 +62,11 @@ export async function renderSuppliersDashboard() {
 
     // Asignar eventos a los botones de edición y eliminación
     suppliers.forEach((supplier) => {
-        // document
-        //     .getElementById(`edit-${supplier.id}`)
-        //     .addEventListener("click", () => {
-        //         renderEditSupplierForm(supplier);
-        //     });
+        document
+            .getElementById(`edit-${supplier.id}`)
+            .addEventListener("click", () => {
+                renderEditSupplierForm(supplier);
+            });
 
         document
             .getElementById(`delete-${supplier.id}`)
@@ -80,12 +76,13 @@ export async function renderSuppliersDashboard() {
                 );
                 if (confirmDelete) {
                     await deleteSupplier(supplier.id);
-                    renderSuppliersDashboard(); // Recargar la lista de proveedores
+                    renderSuppliersDashboard(); // Recargar la lista
                 }
             });
     });
 
-    // Evento para abrir el formulario de creación de proveedor
-    document.getElementById("addSupplierButton");
-    //        .addEventListener("click", renderCreateSupplierForm);
+    // Evento para abrir el formulario de creación
+    document
+        .getElementById("addSupplierButton")
+        .addEventListener("click", renderCreateSupplierForm);
 }
