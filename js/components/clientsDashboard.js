@@ -2,6 +2,7 @@ import { fetchClients, deleteClient } from "../api/client.js"; // Importar funci
 import { renderCreateClientForm } from "./createClientForm.js";
 import { renderEditClientForm } from "./editClientForm.js";
 import { renderClientDetails } from "./clientDetails.js"; // Importar la función para renderizar los detalles del cliente
+import { renderSalesDashboard } from "./salesDashboard.js"; // Importar la función para renderizar el dashboard de ventas
 import { renderNavbar } from "./navbar.js"; // Importar el navbar
 
 export async function renderClientsDashboard() {
@@ -43,15 +44,20 @@ export async function renderClientsDashboard() {
                                     <td class="border px-4 py-2">${client.email}</td>
                                     <td class="border px-4 py-2">${client.phone}</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="edit-${client.id}">
-                                            Edit
-                                        </button>
-                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${client.id}" id="show-${client.id}">
-                                            Show
-                                        </button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${client.id}" id="delete-${client.id}">
-                                            Delete
-                                        </button>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="edit-${client.id}">
+                                                Edit
+                                            </button>
+                                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="show-${client.id}">
+                                                Show
+                                            </button>
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="delete-${client.id}">
+                                                Delete
+                                            </button>
+                                            <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="sales-${client.id}">
+                                                Sales
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             `
@@ -64,7 +70,7 @@ export async function renderClientsDashboard() {
         </div>
     `;
 
-    // Asignar eventos a los botones de edición, mostrar y eliminación
+    // Asignar eventos a los botones de edición, mostrar, ventas y eliminación
     clients.forEach((client) => {
         document
             .getElementById(`edit-${client.id}`)
@@ -88,6 +94,12 @@ export async function renderClientsDashboard() {
                     await deleteClient(client.id);
                     renderClientsDashboard(); // Recargar la lista de clientes
                 }
+            });
+
+        document
+            .getElementById(`sales-${client.id}`)
+            .addEventListener("click", () => {
+                renderSalesDashboard(client.id);
             });
     });
 
