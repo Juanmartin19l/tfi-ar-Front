@@ -8,6 +8,7 @@ import { renderCreateSaleForm } from "./createSaleForm.js";
 import { renderEditSaleForm } from "./editSaleForm.js";
 import { renderNavbar } from "./navbar.js";
 import { renderClientsDashboard } from "./clientsDashboard.js"; // Importar la función para renderizar el dashboard de clientes
+import { fetchClient } from "../api/client.js"; // Importar la función para obtener los detalles del cliente
 
 export async function renderSalesDashboard(clientId) {
     const app = document.getElementById("app");
@@ -18,27 +19,32 @@ export async function renderSalesDashboard(clientId) {
     // Obtener las ventas del cliente
     const sales = await fetchSales(clientId);
 
+    // Obtener los detalles del cliente
+    const client = await fetchClient(clientId);
+
     // Renderizar el contenido principal del dashboard de ventas
     app.innerHTML += `
         <div class="mt-16 w-full max-w-4xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
-                <h2 class="text-2xl font-bold mb-4">Sales Dashboard</h2>
-                <p class="mb-4">Manage sales for client #${clientId}.</p>
+                <h2 class="text-2xl font-bold mb-4">Panel de Ventas</h2>
+                <p class="mb-4">Gestionar ventas para el cliente ${
+                    client.name
+                }.</p>
                 
-                <h3 class="text-xl font-semibold mb-4">Sales List</h3>
+                <h3 class="text-xl font-semibold mb-4">Lista de Ventas</h3>
                 <button id="addSaleButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
-                    Add Sale
+                    Agregar Venta
                 </button>
                 <button id="backToClientsButton" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">
-                    Back to Clients
+                    Volver a Clientes
                 </button>
                 <div class="overflow-x-auto">
                     <table class="table-auto w-full bg-gray-100 rounded-lg shadow-md">
                         <thead>
                             <tr class="bg-gray-200">
-                                <th class="px-4 py-2 text-left">Sale Date</th>
-                                <th class="px-4 py-2 text-left">Observation</th>
-                                <th class="px-4 py-2 text-left">Actions</th>
+                                <th class="px-4 py-2 text-left">Fecha de Venta</th>
+                                <th class="px-4 py-2 text-left">Observación</th>
+                                <th class="px-4 py-2 text-left">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,16 +59,23 @@ export async function renderSalesDashboard(clientId) {
                                         sale.observation || "N/A"
                                     }</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${
-                                            sale.id
-                                        }" id="edit-${sale.id}">
-                                            Edit
-                                        </button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${
-                                            sale.id
-                                        }" id="delete-${sale.id}">
-                                            Delete
-                                        </button>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                sale.id
+                                            }" id="edit-${sale.id}">
+                                                Editar
+                                            </button>
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                sale.id
+                                            }" id="delete-${sale.id}">
+                                                Eliminar
+                                            </button>
+                                            <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                sale.id
+                                            }" id="invoice-${sale.id}">
+                                                Generar Factura
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             `
@@ -75,7 +88,7 @@ export async function renderSalesDashboard(clientId) {
         </div>
     `;
 
-    // Asignar eventos a los botones de edición y eliminación
+    // Asignar eventos a los botones de edición, eliminación y generación de factura
     sales.forEach((sale) => {
         document
             .getElementById(`edit-${sale.id}`)
@@ -87,12 +100,18 @@ export async function renderSalesDashboard(clientId) {
             .getElementById(`delete-${sale.id}`)
             .addEventListener("click", async () => {
                 const confirmDelete = confirm(
-                    `Are you sure you want to delete this sale?`
+                    `¿Estás seguro de que deseas eliminar esta venta?`
                 );
                 if (confirmDelete) {
                     await deleteSale(clientId, sale.id);
                     renderSalesDashboard(clientId); // Recargar la lista de ventas
                 }
+            });
+
+        document
+            .getElementById(`invoice-${sale.id}`)
+            .addEventListener("click", () => {
+                generateInvoicePDF(client.name, sale);
             });
     });
 
@@ -107,4 +126,70 @@ export async function renderSalesDashboard(clientId) {
         .addEventListener("click", () => {
             renderClientsDashboard();
         });
+}
+
+// Función para generar el PDF de la factura
+function generateInvoicePDF(clientName, sale) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("DataXperts", 14, 22);
+
+    doc.setFontSize(12);
+    doc.text(`Cliente: ${clientName}`, 14, 32);
+    doc.text(
+        `Fecha de Venta: ${new Date(sale.saleDate).toLocaleString()}`,
+        14,
+        42
+    );
+    doc.text(`Observación: ${sale.observation || "N/A"}`, 14, 52);
+
+    doc.text("Detalles de la Factura:", 14, 62);
+    doc.text(`Fecha de Emisión: ${sale.invoice.issueDate}`, 14, 72);
+    doc.text(`Fecha de Vencimiento: ${sale.invoice.dueDate}`, 14, 82);
+    doc.text(`Método de Pago: ${sale.invoice.paymentMethod}`, 14, 92);
+    doc.text(
+        `Observación de la Factura: ${sale.invoice.observation || "N/A"}`,
+        14,
+        102
+    );
+    doc.text(`Estado: ${sale.invoice.state}`, 14, 112);
+
+    doc.text("Detalles del Producto:", 14, 122);
+
+    const tableColumn = [
+        "Producto",
+        "Cantidad",
+        "Costo Unitario",
+        "Costo Total",
+    ];
+    const tableRows = [];
+
+    let total = 0;
+    sale.invoice.details.forEach((detail) => {
+        const productData = [
+            detail.description,
+            detail.quantity.toString(),
+            detail.unitPrice.toFixed(2),
+            (detail.quantity * detail.unitPrice).toFixed(2),
+        ];
+        tableRows.push(productData);
+        total += detail.quantity * detail.unitPrice;
+    });
+
+    doc.autoTable({
+        head: [tableColumn],
+        body: tableRows,
+        startY: 132,
+        theme: "grid",
+    });
+
+    doc.text(
+        `Total: ${total.toFixed(2)}`,
+        14,
+        doc.autoTable.previous.finalY + 10
+    );
+
+    doc.save(`factura_${sale.id}.pdf`);
 }
