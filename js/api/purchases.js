@@ -80,3 +80,31 @@ export async function deletePurchase(supplierId, purchaseId) {
         throw error;
     }
 }
+
+// Actualizar una compra
+export async function updatePurchase(supplierId, purchaseId, purchaseData) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/suppliers/${supplierId}/purchases/${purchaseId}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+                body: JSON.stringify(purchaseData),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to update purchase");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error updating purchase:", error);
+        throw error;
+    }
+}
