@@ -15,6 +15,9 @@ export function renderNavbar() {
                     <a href="#clients" class="text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Clientes
                     </a>
+                    <a href="#logout" class="bg-red-500 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </a>
                 </div>
             </div>
         </nav>

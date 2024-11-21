@@ -1,5 +1,4 @@
-import { authenticateUser } from "../api/auth.js";
-import { renderAdminDashboard } from "../components/adminDashboard.js";
+import { authenticateUser } from "../api/auth.js"; // Asegúrate de importar la función de autenticación
 
 export function renderLogin() {
     const app = document.getElementById("app");
@@ -33,7 +32,7 @@ export function renderLogin() {
         const success = await authenticateUser(email, password);
         if (success) {
             // Redirigir al panel de Admin o cargar vista de Admin
-            renderAdminDashboard(); // Cargar la vista de Admin
+            window.location.hash = "#employees"; // Redirigir a la vista de empleados
         } else {
             alert("Invalid credentials");
         }
