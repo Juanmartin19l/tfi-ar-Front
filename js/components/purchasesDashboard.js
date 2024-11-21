@@ -33,7 +33,7 @@ export async function renderPurchasesDashboard(supplierId) {
                                 <th class="px-4 py-2 text-left">Purchase Date</th>
                                 <th class="px-4 py-2 text-left">Total</th>
                                 <th class="px-4 py-2 text-left">Observation</th>
-                                <th class="px-4 py-2 text-left">Payment Condition</th>
+                                <th class="px-4 py-2 text-left">Payment Method</th>
                                 <th class="px-4 py-2 text-left">Actions</th>
                             </tr>
                         </thead>
@@ -54,7 +54,7 @@ export async function renderPurchasesDashboard(supplierId) {
                                         purchase.observation || "N/A"
                                     }</td>
                                     <td class="border px-4 py-2">${
-                                        purchase.paymentConditionId
+                                        purchase.paymentCondition.paymentMethod
                                     }</td>
                                     <td class="border px-4 py-2">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${
