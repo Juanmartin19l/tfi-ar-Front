@@ -1,6 +1,7 @@
-import { fetchPurchases } from "../api/purchases.js";
+import { fetchPurchases, deletePurchase } from "../api/purchases.js";
 import { renderCreatePurchaseForm } from "./createPurchaseForm.js";
 import { renderNavbar } from "./navbar.js";
+import { renderSuppliersDashboard } from "./suppliersDashboard.js"; // Importar la función para renderizar el dashboard de proveedores
 
 export async function renderPurchasesDashboard(supplierId) {
     const app = document.getElementById("app");
@@ -21,6 +22,9 @@ export async function renderPurchasesDashboard(supplierId) {
                 <button id="addPurchaseButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
                     Add Purchase
                 </button>
+                <button id="backToSuppliersButton" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    Back to Suppliers
+                </button>
                 <div class="overflow-x-auto">
                     <table class="table-auto w-full bg-gray-100 rounded-lg shadow-md">
                         <thead>
@@ -29,13 +33,16 @@ export async function renderPurchasesDashboard(supplierId) {
                                 <th class="px-4 py-2 text-left">Total</th>
                                 <th class="px-4 py-2 text-left">Observation</th>
                                 <th class="px-4 py-2 text-left">Payment Condition</th>
+                                <th class="px-4 py-2 text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${purchases
                                 .map(
                                     (purchase) => `
-                                <tr class="hover:bg-gray-50">
+                                <tr class="hover:bg-gray-50" id="purchase-row-${
+                                    purchase.id
+                                }">
                                     <td class="border px-4 py-2">${new Date(
                                         purchase.purchaseDate
                                     ).toLocaleString()}</td>
@@ -48,6 +55,13 @@ export async function renderPurchasesDashboard(supplierId) {
                                     <td class="border px-4 py-2">${
                                         purchase.paymentConditionId
                                     }</td>
+                                    <td class="border px-4 py-2">
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                            purchase.id
+                                        }" id="delete-${purchase.id}">
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             `
                                 )
@@ -59,10 +73,34 @@ export async function renderPurchasesDashboard(supplierId) {
         </div>
     `;
 
+    // Asignar eventos a los botones de borrar
+    purchases.forEach((purchase) => {
+        document
+            .getElementById(`delete-${purchase.id}`)
+            .addEventListener("click", async () => {
+                const confirmDelete = confirm(
+                    `Are you sure you want to delete this purchase?`
+                );
+                if (confirmDelete) {
+                    await deletePurchase(supplierId, purchase.id);
+                    document
+                        .getElementById(`purchase-row-${purchase.id}`)
+                        .remove(); // Eliminar la fila de la tabla
+                }
+            });
+    });
+
     // Evento para abrir el formulario de creación de compras
     document
         .getElementById("addPurchaseButton")
         .addEventListener("click", () => {
             renderCreatePurchaseForm(supplierId);
+        });
+
+    // Evento para volver al dashboard de proveedores
+    document
+        .getElementById("backToSuppliersButton")
+        .addEventListener("click", () => {
+            renderSuppliersDashboard();
         });
 }

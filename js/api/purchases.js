@@ -72,7 +72,9 @@ export async function deletePurchase(supplierId, purchaseId) {
             throw new Error(errorData.message || "Failed to delete purchase");
         }
 
-        return await response.json();
+        // Verificar si hay contenido en la respuesta
+        const responseData = await response.text();
+        return responseData ? JSON.parse(responseData) : {};
     } catch (error) {
         console.error("Error deleting purchase:", error);
         throw error;
