@@ -2,6 +2,7 @@ import { fetchSuppliers, deleteSupplier } from "../api/suppliers.js";
 import { renderCreateSupplierForm } from "./createSupplierForm.js";
 import { renderEditSupplierForm } from "./editSupplierForm.js";
 import { renderNavbar } from "./navbar.js";
+import { renderPurchasesDashboard } from "./purchasesDashboard.js"; // Importar el dashboard de compras
 
 export async function renderSuppliersDashboard() {
     const app = document.getElementById("app");
@@ -42,7 +43,10 @@ export async function renderSuppliersDashboard() {
                                     <td class="border px-4 py-2">${supplier.email}</td>
                                     <td class="border px-4 py-2">${supplier.phone}</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="edit-${supplier.id}">
+                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="view-purchases-${supplier.id}">
+                                            Purchases
+                                        </button>
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${supplier.id}" id="edit-${supplier.id}">
                                             Edit
                                         </button>
                                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${supplier.id}" id="delete-${supplier.id}">
@@ -60,14 +64,23 @@ export async function renderSuppliersDashboard() {
         </div>
     `;
 
-    // Asignar eventos a los botones de edición y eliminación
+    // Asignar eventos a los botones
     suppliers.forEach((supplier) => {
+        // Botón para ver las compras del proveedor
+        document
+            .getElementById(`view-purchases-${supplier.id}`)
+            .addEventListener("click", () => {
+                renderPurchasesDashboard(supplier.id); // Redirigir al dashboard de compras
+            });
+
+        // Botón para editar proveedor
         document
             .getElementById(`edit-${supplier.id}`)
             .addEventListener("click", () => {
                 renderEditSupplierForm(supplier);
             });
 
+        // Botón para eliminar proveedor
         document
             .getElementById(`delete-${supplier.id}`)
             .addEventListener("click", async () => {
