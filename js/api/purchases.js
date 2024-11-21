@@ -78,6 +78,31 @@ export async function fetchPurchase(supplierId, purchaseId) {
     }
 }
 
+// Obtener los detalles de un proveedor específico
+export async function fetchSupplier(supplierId) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/suppliers/${supplierId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to fetch supplier");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching supplier:", error);
+        throw error;
+    }
+}
+
 // Borrar una compra
 export async function deletePurchase(supplierId, purchaseId) {
     const jwt = sessionStorage.getItem("jwt");

@@ -1,4 +1,8 @@
-import { fetchPurchases, deletePurchase } from "../api/purchases.js";
+import {
+    fetchPurchases,
+    deletePurchase,
+    fetchSupplier,
+} from "../api/purchases.js";
 import { renderCreatePurchaseForm } from "./createPurchaseForm.js";
 import { renderEditPurchaseForm } from "./editPurchaseForm.js"; // Importar la función para renderizar el formulario de edición
 import { renderPurchaseDetails } from "./purchaseDetails.js"; // Importar la función para renderizar los detalles de la compra
@@ -11,6 +15,9 @@ export async function renderPurchasesDashboard(supplierId) {
     // Renderizar el navbar
     app.innerHTML = renderNavbar();
 
+    // Obtener detalles del proveedor
+    const supplier = await fetchSupplier(supplierId);
+
     // Obtener compras del proveedor
     const purchases = await fetchPurchases(supplierId);
 
@@ -19,7 +26,9 @@ export async function renderPurchasesDashboard(supplierId) {
         <div class="mt-16 w-full max-w-4xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Purchases Dashboard</h2>
-                <p class="mb-4">Manage purchases for supplier #${supplierId}.</p>
+                <p class="mb-4">Manage purchases for supplier ${
+                    supplier.name
+                }.</p>
                 
                 <button id="addPurchaseButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
                     Add Purchase
