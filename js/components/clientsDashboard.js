@@ -1,6 +1,7 @@
-import { fetchClients, createClient, deleteClient } from "../api/client.js"; // Importar funciones necesarias
+import { fetchClients, deleteClient } from "../api/client.js"; // Importar funciones necesarias
 import { renderCreateClientForm } from "./createClientForm.js";
 import { renderEditClientForm } from "./editClientForm.js";
+import { renderClientDetails } from "./clientDetails.js"; // Importar la función para renderizar los detalles del cliente
 import { renderNavbar } from "./navbar.js"; // Importar el navbar
 
 export async function renderClientsDashboard() {
@@ -45,6 +46,9 @@ export async function renderClientsDashboard() {
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="edit-${client.id}">
                                             Edit
                                         </button>
+                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${client.id}" id="show-${client.id}">
+                                            Show
+                                        </button>
                                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${client.id}" id="delete-${client.id}">
                                             Delete
                                         </button>
@@ -60,12 +64,18 @@ export async function renderClientsDashboard() {
         </div>
     `;
 
-    // Asignar eventos a los botones de edición y eliminación
+    // Asignar eventos a los botones de edición, mostrar y eliminación
     clients.forEach((client) => {
         document
             .getElementById(`edit-${client.id}`)
             .addEventListener("click", () => {
                 renderEditClientForm(client);
+            });
+
+        document
+            .getElementById(`show-${client.id}`)
+            .addEventListener("click", () => {
+                renderClientDetails(client.id);
             });
 
         document

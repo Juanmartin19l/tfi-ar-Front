@@ -49,6 +49,88 @@ export async function createClient(clientData) {
     }
 }
 
+// Obtener los detalles de un cliente específico
+export async function fetchClient(clientId) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(`${API_BASE_URL}/clients/${clientId}`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to fetch client");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching client:", error);
+        throw error;
+    }
+}
+
+// Crear una nueva interacción para un cliente
+export async function createInteraction(clientId, interactionData) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/clients/${clientId}/interactions`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+                body: JSON.stringify(interactionData),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message || "Failed to create interaction"
+            );
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error creating interaction:", error);
+        throw error;
+    }
+}
+
+// Borrar una interacción de un cliente
+export async function deleteInteraction(clientId, interactionId) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/clients/${clientId}/interactions/${interactionId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message || "Failed to delete interaction"
+            );
+        }
+
+        // Verificar si hay contenido en la respuesta
+        const responseData = await response.text();
+        return responseData ? JSON.parse(responseData) : {};
+    } catch (error) {
+        console.error("Error deleting interaction:", error);
+        throw error;
+    }
+}
+
 // Eliminar un cliente
 export async function deleteClient(id) {
     const jwt = sessionStorage.getItem("jwt");
@@ -72,6 +154,7 @@ export async function deleteClient(id) {
         alert(`Failed to delete client: ${error.message}`);
     }
 }
+
 // Actualizar un cliente
 export async function updateClient(id, clientData) {
     const jwt = sessionStorage.getItem("jwt");
