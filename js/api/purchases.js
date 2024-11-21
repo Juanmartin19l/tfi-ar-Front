@@ -53,6 +53,31 @@ export async function fetchPurchases(supplierId) {
     }
 }
 
+// Obtener los detalles de una compra específica
+export async function fetchPurchase(supplierId, purchaseId) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/suppliers/${supplierId}/purchases/${purchaseId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to fetch purchase");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching purchase:", error);
+        throw error;
+    }
+}
+
 // Borrar una compra
 export async function deletePurchase(supplierId, purchaseId) {
     const jwt = sessionStorage.getItem("jwt");
@@ -105,6 +130,64 @@ export async function updatePurchase(supplierId, purchaseId, purchaseData) {
         return await response.json();
     } catch (error) {
         console.error("Error updating purchase:", error);
+        throw error;
+    }
+}
+
+// Crear o actualizar un rating para una compra
+export async function createOrUpdateRating(supplierId, purchaseId, ratingData) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/suppliers/${supplierId}/purchases/${purchaseId}/ratings`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+                body: JSON.stringify(ratingData),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message || "Failed to create or update rating"
+            );
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error creating or updating rating:", error);
+        throw error;
+    }
+}
+
+// Borrar un rating de una compra
+export async function deleteRating(supplierId, purchaseId) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/suppliers/${supplierId}/purchases/${purchaseId}/ratings`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to delete rating");
+        }
+
+        // Verificar si hay contenido en la respuesta
+        const responseData = await response.text();
+        return responseData ? JSON.parse(responseData) : {};
+    } catch (error) {
+        console.error("Error deleting rating:", error);
         throw error;
     }
 }

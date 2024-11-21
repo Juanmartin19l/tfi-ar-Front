@@ -1,6 +1,7 @@
 import { fetchPurchases, deletePurchase } from "../api/purchases.js";
 import { renderCreatePurchaseForm } from "./createPurchaseForm.js";
 import { renderEditPurchaseForm } from "./editPurchaseForm.js"; // Importar la función para renderizar el formulario de edición
+import { renderPurchaseDetails } from "./purchaseDetails.js"; // Importar la función para renderizar los detalles de la compra
 import { renderNavbar } from "./navbar.js";
 import { renderSuppliersDashboard } from "./suppliersDashboard.js"; // Importar la función para renderizar el dashboard de proveedores
 
@@ -62,6 +63,11 @@ export async function renderPurchasesDashboard(supplierId) {
                                         }" id="edit-${purchase.id}">
                                             Edit
                                         </button>
+                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${
+                                            purchase.id
+                                        }" id="show-${purchase.id}">
+                                            Show
+                                        </button>
                                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${
                                             purchase.id
                                         }" id="delete-${purchase.id}">
@@ -79,12 +85,18 @@ export async function renderPurchasesDashboard(supplierId) {
         </div>
     `;
 
-    // Asignar eventos a los botones de editar y borrar
+    // Asignar eventos a los botones de editar, mostrar y borrar
     purchases.forEach((purchase) => {
         document
             .getElementById(`edit-${purchase.id}`)
             .addEventListener("click", () => {
                 renderEditPurchaseForm(supplierId, purchase);
+            });
+
+        document
+            .getElementById(`show-${purchase.id}`)
+            .addEventListener("click", () => {
+                renderPurchaseDetails(supplierId, purchase.id);
             });
 
         document
