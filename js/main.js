@@ -8,7 +8,7 @@ import { renderLogout } from "./components/logout.js"; // Importamos la nueva pa
 
 function handleRouting() {
     const jwt = sessionStorage.getItem("jwt"); // Verificar si el usuario está autenticado
-    const hash = window.location.hash || "#employees"; // Por defecto, empleados
+    const hash = window.location.hash || "#admin"; // Por defecto, empleados
 
     // Si no hay JWT, redirigimos a la página de login
     if (!jwt && hash !== "#login") {
@@ -21,6 +21,9 @@ function handleRouting() {
     app.innerHTML = renderNavbar();
 
     switch (hash) {
+        case "#admin":
+            renderAdminDashboard(); // Mostrar el dashboard de administración
+            break;
         case "#employees":
             renderEmployeeDashboard();
             break;
@@ -36,9 +39,7 @@ function handleRouting() {
         case "#login":
             renderLogin(); // Si el hash es #login, mostrar el login
             break;
-        case "#admin":
-            renderAdminDashboard(); // Mostrar el dashboard de administración
-            break;
+
         default:
             renderAdminDashboard(); // Si el hash no coincide, por defecto empleados
     }

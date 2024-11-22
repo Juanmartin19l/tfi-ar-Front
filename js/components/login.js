@@ -32,7 +32,7 @@ export function renderLogin() {
         const success = await authenticateUser(email, password);
         if (success) {
             // Redirigir al panel de Admin o cargar vista de Admin
-            window.location.hash = "#employees"; // Redirigir a la vista de empleados
+            window.location.hash = "#admin"; // Redirigir a la vista de empleados
         } else {
             alert("Credenciales inválidas");
         }
