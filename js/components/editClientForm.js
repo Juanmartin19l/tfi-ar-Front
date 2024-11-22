@@ -6,96 +6,107 @@ export function renderEditClientForm(client) {
     app.innerHTML = `
     <div class="w-full max-w-4xl mx-auto">
     <form id="editClientForm" class="bg-white shadow-md rounded-lg p-8">
-        <h2 class="text-2xl font-bold mb-4">Edit Client</h2>
+        <h2 class="text-2xl font-bold mb-4">Editar Cliente</h2>
 
         <div class="mb-4">
-            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Company Name</label>
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nombre de la Empresa</label>
             <input type="text" id="name" value="${
                 client.name
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Correo Electrónico</label>
             <input type="email" id="email" value="${
                 client.email
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone</label>
+            <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Teléfono</label>
             <input type="tel" id="phone" value="${
                 client.phone
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="contactName" class="block text-gray-700 text-sm font-bold mb-2">Contact Name</label>
+            <label for="contactName" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Contacto</label>
             <input type="text" id="contactName" value="${
                 client.contactName
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="industry" class="block text-gray-700 text-sm font-bold mb-2">Industry</label>
+            <label for="industry" class="block text-gray-700 text-sm font-bold mb-2">Industria</label>
             <input type="text" id="industry" value="${
                 client.industry
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="estimatedTransactionsNumber" class="block text-gray-700 text-sm font-bold mb-2">Estimated Transactions Number</label>
+            <label for="estimatedTransactionsNumber" class="block text-gray-700 text-sm font-bold mb-2">Número Estimado de Transacciones</label>
             <input type="number" id="estimatedTransactionsNumber" value="${
                 client.estimatedTransactionsNumber
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="technologiesUsed" class="block text-gray-700 text-sm font-bold mb-2">Technologies Used</label>
+            <label for="technologiesUsed" class="block text-gray-700 text-sm font-bold mb-2">Tecnologías Utilizadas</label>
             <input type="text" id="technologiesUsed" value="${
                 client.technologiesUsed
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="remarks" class="block text-gray-700 text-sm font-bold mb-2">Remarks</label>
+            <label for="remarks" class="block text-gray-700 text-sm font-bold mb-2">Comentarios</label>
             <textarea id="remarks" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">${
                 client.remarks || ""
             }</textarea>
         </div>
 
-        <h3 class="text-xl font-semibold mb-4">Address</h3>
+        <h3 class="text-xl font-semibold mb-4">Dirección</h3>
         <div class="mb-4">
-            <label for="street" class="block text-gray-700 text-sm font-bold mb-2">Street</label>
+            <label for="street" class="block text-gray-700 text-sm font-bold mb-2">Calle</label>
             <input type="text" id="street" value="${
                 client.address.street
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="number" class="block text-gray-700 text-sm font-bold mb-2">Number</label>
+            <label for="number" class="block text-gray-700 text-sm font-bold mb-2">Número</label>
             <input type="text" id="number" value="${
                 client.address.number
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="floor" class="block text-gray-700 text-sm font-bold mb-2">Floor</label>
+            <label for="floor" class="block text-gray-700 text-sm font-bold mb-2">Piso</label>
             <input type="text" id="floor" value="${
                 client.address.floor
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="apartment" class="block text-gray-700 text-sm font-bold mb-2">Apartment</label>
+            <label for="apartment" class="block text-gray-700 text-sm font-bold mb-2">Departamento</label>
             <input type="text" id="apartment" value="${
                 client.address.apartment
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="postalCode" class="block text-gray-700 text-sm font-bold mb-2">Postal Code</label>
+            <label for="postalCode" class="block text-gray-700 text-sm font-bold mb-2">Código Postal</label>
             <input type="text" id="postalCode" value="${
                 client.address.postalCode
             }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-            <label for="cityId" class="block text-gray-700 text-sm font-bold mb-2">City ID</label>
-            <input type="number" id="cityId" value="${
-                client.address.cityId
-            }" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <label for="country" class="block text-gray-700 text-sm font-bold mb-2">País</label>
+            <input type="text" id="country" value="Argentina" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2" readonly>
         </div>
         <div class="mb-4">
-            <label for="observations" class="block text-gray-700 text-sm font-bold mb-2">Observations</label>
+            <label for="state" class="block text-gray-700 text-sm font-bold mb-2">Provincia</label>
+            <select id="state" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2">
+                <option value="">Seleccione una provincia</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="city" class="block text-gray-700 text-sm font-bold mb-2">Ciudad</label>
+            <select id="city" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2">
+                <option value="">Seleccione una ciudad</option>
+            </select>
+            <input type="hidden" id="cityId" value="${client.address.cityId}">
+        </div>
+        <div class="mb-4">
+            <label for="observations" class="block text-gray-700 text-sm font-bold mb-2">Observaciones</label>
             <textarea id="observations" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">${
                 client.address.observations || ""
             }</textarea>
@@ -103,16 +114,73 @@ export function renderEditClientForm(client) {
 
         <div class="flex items-center justify-between">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Save
+                Guardar
             </button>
             <button id="cancel" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                Cancel
+                Cancelar
             </button>
         </div>
     </form>
 </div>
 
     `;
+
+    // Cargar los datos de lugares.json
+    fetch("/data/lugares.json")
+        .then((response) => response.json())
+        .then((lugares) => {
+            // Llenar el selector de provincias
+            const stateSelect = document.getElementById("state");
+            lugares.countries[0].states.forEach((state) => {
+                const option = document.createElement("option");
+                option.value = state.state_id;
+                option.textContent = state.state_name;
+                stateSelect.appendChild(option);
+            });
+
+            // Seleccionar la provincia y cargar las ciudades correspondientes
+            const selectedState = lugares.countries[0].states.find((state) =>
+                state.cities.some(
+                    (city) => city.city_id === client.address.cityId
+                )
+            );
+            if (selectedState) {
+                stateSelect.value = selectedState.state_id;
+                const citySelect = document.getElementById("city");
+                citySelect.innerHTML =
+                    '<option value="">Seleccione una ciudad</option>';
+                selectedState.cities.forEach((city) => {
+                    const option = document.createElement("option");
+                    option.value = city.city_id;
+                    option.textContent = city.city_name;
+                    citySelect.appendChild(option);
+                });
+                citySelect.value = client.address.cityId;
+            }
+
+            // Manejar el cambio de provincia para cargar las ciudades correspondientes
+            stateSelect.addEventListener("change", (e) => {
+                const stateId = e.target.value;
+                const state = lugares.countries[0].states.find(
+                    (state) => state.state_id == stateId
+                );
+                const citySelect = document.getElementById("city");
+                citySelect.innerHTML =
+                    '<option value="">Seleccione una ciudad</option>';
+                state.cities.forEach((city) => {
+                    const option = document.createElement("option");
+                    option.value = city.city_id;
+                    option.textContent = city.city_name;
+                    citySelect.appendChild(option);
+                });
+            });
+
+            // Manejar el cambio de ciudad para establecer el cityId
+            document.getElementById("city").addEventListener("change", (e) => {
+                const cityId = e.target.value;
+                document.getElementById("cityId").value = cityId;
+            });
+        });
 
     document
         .getElementById("editClientForm")
@@ -144,10 +212,10 @@ export function renderEditClientForm(client) {
 
             try {
                 await updateClient(client.id, updatedClient);
-                alert("Client updated successfully");
+                alert("Cliente actualizado exitosamente");
                 renderClientsDashboard(); // Regresa al dashboard
             } catch (error) {
-                alert(`Failed to update client: ${error.message}`);
+                alert(`Error al actualizar el cliente: ${error.message}`);
             }
         });
 
