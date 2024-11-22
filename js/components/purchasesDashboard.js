@@ -117,10 +117,15 @@ export async function renderPurchasesDashboard(supplierId) {
                     `¿Estás seguro de que deseas eliminar esta compra?`
                 );
                 if (confirmDelete) {
-                    await deletePurchase(supplierId, purchase.id);
-                    document
-                        .getElementById(`purchase-row-${purchase.id}`)
-                        .remove(); // Eliminar la fila de la tabla
+                    try {
+                        await deletePurchase(supplierId, purchase.id);
+                        document
+                            .getElementById(`purchase-row-${purchase.id}`)
+                            .remove(); // Eliminar la fila de la tabla
+                    } catch (error) {
+                        console.error("Error deleting purchase:", error);
+                        alert(`Error al eliminar la compra: ${error.message}`);
+                    }
                 }
             });
     });
