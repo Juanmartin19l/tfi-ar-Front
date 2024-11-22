@@ -1,5 +1,5 @@
 import { updateEmployee } from "../api/employee.js";
-import { renderAdminDashboard } from "./adminDashboard.js";
+import { renderEmployeeDashboard } from "./employeeDashboard.js";
 
 export function renderEditEmployeeForm(employee) {
     const app = document.getElementById("app");
@@ -202,7 +202,7 @@ export function renderEditEmployeeForm(employee) {
             try {
                 await updateEmployee(employee.id, updatedEmployee);
                 alert("Empleado actualizado exitosamente");
-                renderAdminDashboard();
+                renderEmployeeDashboard();
             } catch (error) {
                 alert(`Error al actualizar el empleado: ${error.message}`);
             }
@@ -210,5 +210,5 @@ export function renderEditEmployeeForm(employee) {
 
     document
         .getElementById("cancel")
-        .addEventListener("click", renderAdminDashboard);
+        .addEventListener("click", renderEmployeeDashboard);
 }

@@ -1,5 +1,5 @@
 import { fetchEmployeeById } from "../api/employee.js";
-import { renderAdminDashboard } from "./adminDashboard.js"; // Para regresar al dashboard
+import { renderEmployeeDashboard } from "./employeeDashboard.js"; // Para regresar al dashboard
 
 export async function renderEmployeeDetails(employeeId) {
     const app = document.getElementById("app");
@@ -54,5 +54,5 @@ export async function renderEmployeeDetails(employeeId) {
     // Regresar al dashboard
     document
         .getElementById("backToDashboard")
-        .addEventListener("click", renderAdminDashboard);
+        .addEventListener("click", renderEmployeeDashboard);
 }

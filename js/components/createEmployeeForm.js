@@ -1,5 +1,5 @@
 import { createEmployee } from "../api/employee.js";
-import { renderAdminDashboard } from "./adminDashboard.js";
+import { renderEmployeeDashboard } from "./employeeDashboard.js";
 
 export function renderCreateEmployeeForm() {
     const app = document.getElementById("app");
@@ -129,7 +129,7 @@ export function renderCreateEmployeeForm() {
             try {
                 await createEmployee(newEmployee);
                 alert("Empleado creado exitosamente");
-                renderAdminDashboard(); // Recargar la lista de empleados
+                renderEmployeeDashboard(); // Recargar la lista de empleados
             } catch (error) {
                 alert(`Error al crear el empleado: ${error.message}`);
             }
@@ -138,5 +138,5 @@ export function renderCreateEmployeeForm() {
     // Botón de cancelación
     document
         .getElementById("cancel")
-        .addEventListener("click", renderAdminDashboard);
+        .addEventListener("click", renderEmployeeDashboard);
 }
