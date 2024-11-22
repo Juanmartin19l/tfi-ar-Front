@@ -16,7 +16,7 @@ export async function renderAdminDashboard() {
 
     // Agregar contenido del Dashboard después del navbar
     app.innerHTML += `
-        <div class="w-full max-w-4xl mx-auto mt-8">
+        <div class="w-full max-w-7xl mx-auto mt-8">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Panel de Administración</h2>
                 <p class="mb-4">Gestiona empleados, ventas, proveedores y más.</p>
@@ -44,15 +44,17 @@ export async function renderAdminDashboard() {
                                     <td class="border px-4 py-2">${employee.email}</td>
                                     <td class="border px-4 py-2">${employee.dni}</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${employee.id}" id="edit-${employee.id}">
-                                            Editar
-                                        </button>
-                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${employee.id}" id="details-${employee.id}">
-                                            Detalles
-                                        </button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${employee.id}" id="delete-${employee.id}">
-                                            Eliminar
-                                        </button>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${employee.id}" id="edit-${employee.id}">
+                                                Editar
+                                            </button>
+                                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${employee.id}" id="details-${employee.id}">
+                                                Detalles
+                                            </button>
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${employee.id}" id="delete-${employee.id}">
+                                                Eliminar
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             `

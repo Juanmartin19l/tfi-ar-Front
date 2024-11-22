@@ -3,6 +3,7 @@ import { renderCreateSupplierForm } from "./createSupplierForm.js";
 import { renderEditSupplierForm } from "./editSupplierForm.js";
 import { renderNavbar } from "./navbar.js";
 import { renderPurchasesDashboard } from "./purchasesDashboard.js"; // Importar el dashboard de compras
+import { renderSupplierDetails } from "./supplierDetails.js"; // Importar la función para renderizar los detalles del proveedor
 
 export async function renderSuppliersDashboard() {
     const app = document.getElementById("app");
@@ -15,7 +16,7 @@ export async function renderSuppliersDashboard() {
 
     // Renderizar el contenido principal
     app.innerHTML += `
-        <div class="mt-16 w-full max-w-4xl mx-auto">
+        <div class="mt-16 w-full max-w-6xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Panel de Proveedores</h2>
                 <p class="mb-4">Gestiona los proveedores del negocio.</p>
@@ -43,15 +44,20 @@ export async function renderSuppliersDashboard() {
                                     <td class="border px-4 py-2">${supplier.email}</td>
                                     <td class="border px-4 py-2">${supplier.phone}</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="view-purchases-${supplier.id}">
-                                            Compras
-                                        </button>
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${supplier.id}" id="edit-${supplier.id}">
-                                            Editar
-                                        </button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${supplier.id}" id="delete-${supplier.id}">
-                                            Eliminar
-                                        </button>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="edit-${supplier.id}">
+                                                Editar
+                                            </button>
+                                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="details-${supplier.id}">
+                                                Mostrar
+                                            </button>
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="delete-${supplier.id}">
+                                                Eliminar
+                                            </button>
+                                            <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="view-purchases-${supplier.id}">
+                                                Compras
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             `
@@ -78,6 +84,13 @@ export async function renderSuppliersDashboard() {
             .getElementById(`edit-${supplier.id}`)
             .addEventListener("click", () => {
                 renderEditSupplierForm(supplier);
+            });
+
+        // Botón para mostrar detalles del proveedor
+        document
+            .getElementById(`details-${supplier.id}`)
+            .addEventListener("click", () => {
+                renderSupplierDetails(supplier.id);
             });
 
         // Botón para eliminar proveedor

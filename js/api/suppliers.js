@@ -24,6 +24,31 @@ export async function fetchSuppliers() {
     }
 }
 
+// Obtener los detalles de un proveedor específico
+export async function fetchSupplier(supplierId) {
+    const jwt = sessionStorage.getItem("jwt");
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/suppliers/${supplierId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to fetch supplier");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching supplier:", error);
+        throw error;
+    }
+}
+
 // Crear un nuevo proveedor
 export async function createSupplier(supplierData) {
     const jwt = sessionStorage.getItem("jwt");
@@ -66,10 +91,10 @@ export async function deleteSupplier(id) {
             throw new Error(errorData.message || "Failed to delete supplier");
         }
 
-        alert("Supplier deleted successfully");
+        alert("Proveedor eliminado exitosamente");
     } catch (error) {
         console.error("Error deleting supplier:", error);
-        alert(`Failed to delete supplier: ${error.message}`);
+        alert(`Error al eliminar el proveedor: ${error.message}`);
     }
 }
 

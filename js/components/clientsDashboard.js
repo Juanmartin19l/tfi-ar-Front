@@ -16,7 +16,7 @@ export async function renderClientsDashboard() {
 
     // Renderizar el contenido principal del dashboard
     app.innerHTML += `
-        <div class="mt-16 w-full max-w-4xl mx-auto">
+        <div class="mt-16 w-full max-w-6xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Panel de Clientes</h2>
                 <p class="mb-4">Gestiona los clientes del negocio.</p>

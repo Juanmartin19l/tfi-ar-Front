@@ -23,7 +23,7 @@ export async function renderPurchasesDashboard(supplierId) {
 
     // Renderizar contenido principal
     app.innerHTML += `
-        <div class="mt-16 w-full max-w-4xl mx-auto">
+        <div class="mt-16 w-full max-w-6xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Panel de Compras</h2>
                 <p class="mb-4">Gestiona las compras del proveedor ${
@@ -67,21 +67,23 @@ export async function renderPurchasesDashboard(supplierId) {
                                         purchase.paymentCondition.paymentMethod
                                     }</td>
                                     <td class="border px-4 py-2">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${
-                                            purchase.id
-                                        }" id="edit-${purchase.id}">
-                                            Editar
-                                        </button>
-                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ml-2" data-id="${
-                                            purchase.id
-                                        }" id="show-${purchase.id}">
-                                            Mostrar
-                                        </button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${
-                                            purchase.id
-                                        }" id="delete-${purchase.id}">
-                                            Eliminar
-                                        </button>
+                                        <div class="flex space-x-2">
+                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                purchase.id
+                                            }" id="edit-${purchase.id}">
+                                                Editar
+                                            </button>
+                                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                purchase.id
+                                            }" id="show-${purchase.id}">
+                                                Mostrar
+                                            </button>
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                purchase.id
+                                            }" id="delete-${purchase.id}">
+                                                Eliminar
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             `

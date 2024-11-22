@@ -24,7 +24,7 @@ export async function renderSalesDashboard(clientId) {
 
     // Renderizar el contenido principal del dashboard de ventas
     app.innerHTML += `
-        <div class="mt-16 w-full max-w-4xl mx-auto">
+        <div class="mt-16 w-full max-w-7xl mx-auto">
             <div class="bg-white shadow-md rounded-lg p-8">
                 <h2 class="text-2xl font-bold mb-4">Panel de Ventas</h2>
                 <p class="mb-4">Gestionar ventas para el cliente ${
@@ -65,15 +65,15 @@ export async function renderSalesDashboard(clientId) {
                                             }" id="edit-${sale.id}">
                                                 Editar
                                             </button>
+                                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded" data-id="${
+                                                sale.id
+                                            }" id="invoice-${sale.id}">
+                                                Generar Factura
+                                            </button>
                                             <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" data-id="${
                                                 sale.id
                                             }" id="delete-${sale.id}">
                                                 Eliminar
-                                            </button>
-                                            <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded" data-id="${
-                                                sale.id
-                                            }" id="invoice-${sale.id}">
-                                                Generar Factura
                                             </button>
                                         </div>
                                     </td>
@@ -154,7 +154,6 @@ function generateInvoicePDF(clientName, sale) {
         14,
         102
     );
-    doc.text(`Estado: ${sale.invoice.state}`, 14, 112);
 
     doc.text("Detalles del Producto:", 14, 122);
 
