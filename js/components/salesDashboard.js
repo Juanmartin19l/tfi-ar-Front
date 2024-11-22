@@ -111,7 +111,7 @@ export async function renderSalesDashboard(clientId) {
         document
             .getElementById(`invoice-${sale.id}`)
             .addEventListener("click", () => {
-                generateInvoicePDF(client.name, sale);
+                generateInvoicePDF(client, sale);
             });
     });
 
@@ -129,15 +129,17 @@ export async function renderSalesDashboard(clientId) {
 }
 
 // Función para generar el PDF de la factura
-function generateInvoicePDF(clientName, sale) {
+function generateInvoicePDF(client, sale) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    // Establecer colores y fuentes
+    doc.setTextColor(0, 0, 0); // Negro
     doc.setFontSize(18);
-    doc.text("DataXperts", 14, 22);
+    doc.text("DataExperts", 180, 22, { align: "right" });
 
     doc.setFontSize(12);
-    doc.text(`Cliente: ${clientName}`, 14, 32);
+    doc.text(`Cliente: ${client.name}`, 14, 32);
     doc.text(
         `Fecha de Venta: ${new Date(sale.saleDate).toLocaleString()}`,
         14,
@@ -170,8 +172,8 @@ function generateInvoicePDF(clientName, sale) {
         const productData = [
             detail.description,
             detail.quantity.toString(),
-            detail.unitPrice.toFixed(2),
-            (detail.quantity * detail.unitPrice).toFixed(2),
+            `$${detail.unitPrice.toFixed(2)}`,
+            `$${(detail.quantity * detail.unitPrice).toFixed(2)}`,
         ];
         tableRows.push(productData);
         total += detail.quantity * detail.unitPrice;
@@ -182,10 +184,18 @@ function generateInvoicePDF(clientName, sale) {
         body: tableRows,
         startY: 132,
         theme: "grid",
+        headStyles: {
+            fillColor: [169, 169, 169], // Gris
+            textColor: [0, 0, 0], // Negro
+        },
+        bodyStyles: {
+            fillColor: [255, 255, 255], // Blanco
+            textColor: [0, 0, 0], // Negro
+        },
     });
 
     doc.text(
-        `Total: ${total.toFixed(2)}`,
+        `Total: $${total.toFixed(2)}`,
         14,
         doc.autoTable.previous.finalY + 10
     );

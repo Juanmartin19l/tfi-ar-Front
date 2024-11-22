@@ -1,6 +1,7 @@
 import { renderLogin } from "./components/login.js"; // Importamos el componente de login
 import { renderNavbar } from "./components/navbar.js"; // Importamos el navbar
 import { renderAdminDashboard } from "./components/adminDashboard.js";
+import { renderEmployeeDashboard } from "./components/employeeDashboard.js";
 import { renderSuppliersDashboard } from "./components/suppliersDashboard.js";
 import { renderClientsDashboard } from "./components/clientsDashboard.js";
 import { renderLogout } from "./components/logout.js"; // Importamos la nueva pantalla de logout
@@ -21,7 +22,7 @@ function handleRouting() {
 
     switch (hash) {
         case "#employees":
-            renderAdminDashboard();
+            renderEmployeeDashboard();
             break;
         case "#suppliers":
             renderSuppliersDashboard();
@@ -34,6 +35,9 @@ function handleRouting() {
             break;
         case "#login":
             renderLogin(); // Si el hash es #login, mostrar el login
+            break;
+        case "#admin":
+            renderAdminDashboard(); // Mostrar el dashboard de administración
             break;
         default:
             renderAdminDashboard(); // Si el hash no coincide, por defecto empleados

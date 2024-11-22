@@ -3,7 +3,7 @@ export function renderNavbar() {
         <nav class="bg-blue-600 p-4 fixed top-0 left-0 w-full z-50">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
                 <div class="text-white font-bold text-xl">
-                    Admin Dashboard
+                    <a href="#admin">DataExperts</a>
                 </div>
                 <div class="flex space-x-4">
                     <a href="#employees" class="text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
