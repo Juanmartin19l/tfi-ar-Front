@@ -4,6 +4,7 @@ import { renderEditClientForm } from "./editClientForm.js";
 import { renderClientDetails } from "./clientDetails.js"; // Importar la función para renderizar los detalles del cliente
 import { renderSalesDashboard } from "./salesDashboard.js"; // Importar la función para renderizar el dashboard de ventas
 import { renderNavbar } from "./navbar.js"; // Importar el navbar
+import { fetchSales } from "../api/sales.js";
 
 export async function renderClientsDashboard() {
     const app = document.getElementById("app");
@@ -32,6 +33,7 @@ export async function renderClientsDashboard() {
                                 <th class="px-4 py-2 text-left">Nombre</th>
                                 <th class="px-4 py-2 text-left">Correo Electrónico</th>
                                 <th class="px-4 py-2 text-left">Teléfono</th>
+                                <th class="px-4 py-2 text-left">Monto total de las ventas</th>
                                 <th class="px-4 py-2 text-left">Acciones</th>
                             </tr>
                         </thead>
@@ -43,6 +45,7 @@ export async function renderClientsDashboard() {
                                     <td class="border px-4 py-2">${client.name}</td>
                                     <td class="border px-4 py-2">${client.email}</td>
                                     <td class="border px-4 py-2">${client.phone}</td>
+                                    <td class="border px-4 py-2">${client.totalAmountSales.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</td>
                                     <td class="border px-4 py-2">
                                         <div class="flex space-x-2">
                                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${client.id}" id="edit-${client.id}">

@@ -32,6 +32,7 @@ export async function renderSuppliersDashboard() {
                                 <th class="px-4 py-2 text-left">Nombre</th>
                                 <th class="px-4 py-2 text-left">Correo Electrónico</th>
                                 <th class="px-4 py-2 text-left">Teléfono</th>
+                                <th class="px-4 py-2 text-left">Calificación Promedio</th>
                                 <th class="px-4 py-2 text-left">Acciones</th>
                             </tr>
                         </thead>
@@ -43,6 +44,7 @@ export async function renderSuppliersDashboard() {
                                     <td class="border px-4 py-2">${supplier.name}</td>
                                     <td class="border px-4 py-2">${supplier.email}</td>
                                     <td class="border px-4 py-2">${supplier.phone}</td>
+                                    <td class="border px-4 py-2">${supplier.averageRating === 0 ? "N/A" : supplier.averageRating}</td>
                                     <td class="border px-4 py-2">
                                         <div class="flex space-x-2">
                                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-id="${supplier.id}" id="edit-${supplier.id}">

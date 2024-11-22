@@ -54,7 +54,7 @@ export function renderLogin() {
                         </div>
 
                         <div class="mt-6">
-                            <a href="https://tfi-ar-nosotros.netlify.app" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <a href="https://tfi-ar-nosotros.netlify.app" target="_blank" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                 Acerca de Nosotros
                             </a>
                         </div>
